@@ -36,13 +36,13 @@ jobs:
       - name: Install author dependencies
         run: dzil authordeps | cpm install -g -
       - name: Install dependencies
-        run: dzil listdeps --develop | cpanm
+        run: dzil listdeps --develop | cpanm --notest
       - name: Build dist
         run: dzil build --no-tgz --in build
       - name: Install dependencies
         run: |
           cd build
-          cpanm --installdeps --local-lib ${GITHUB_WORKSPACE}/local --with-all-features --with-develop --with-suggests .
+          cpanm --notest --installdeps --local-lib ${GITHUB_WORKSPACE}/local --with-all-features --with-develop --with-suggests .
       - name: Run tests
         run: |
           cd build
@@ -83,7 +83,7 @@ jobs:
       - name: Log perl information
         run: perl -V
       - name: Install dependencies
-        run: cd build && cpanm --installdeps --with-all-features .
+        run: cd build && cpanm --notest --installdeps --with-all-features .
       - name: Run tests
         run: cd build && prove --timer --lib --recurse --jobs $(nproc) --shuffle t
 
@@ -103,7 +103,7 @@ jobs:
       - name: Log perl information
         run: perl -V
       - name: Install dependencies
-        run: cd build && cpanm --installdeps --with-all-features .
+        run: cd build && cpanm --notest --installdeps --with-all-features .
       - name: Run tests
         run: cd build && prove --timer --lib --recurse --jobs $(sysctl -n hw.logicalcpu) --shuffle t
 
@@ -125,7 +125,7 @@ jobs:
       - name: Log perl information
         run: perl -V
       - name: Install dependencies
-        run: cd build && cpanm --installdeps --with-all-features .
+        run: cd build && cpanm --notest --installdeps --with-all-features .
       - name: Run tests
         run: cd build && prove --timer --lib --recurse --jobs $(nproc) --shuffle t
 
